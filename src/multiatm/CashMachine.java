@@ -6,13 +6,14 @@ import multiatm.exception.InterruptOperationException;
 public class CashMachine {
     public static void main(String[] args) {
         try {
-            Operation operation;
+            Operation operation = Operation.LOGIN;
+            CommandExecutor.execute(operation);
             do {
                 operation = ConsoleHelper.askOperation();
                 CommandExecutor.execute(operation);
             } while (operation != Operation.EXIT);
         } catch (InterruptOperationException ignored) {
-            ConsoleHelper.writeMessage("Thank you for visiting cash machine. Good luck.");
+            ConsoleHelper.writeMessage("Terminated. Thank you for visiting JavaRush cash machine. Good luck.");
         }
     }
 }
