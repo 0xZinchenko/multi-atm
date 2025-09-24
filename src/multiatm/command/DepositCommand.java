@@ -3,10 +3,11 @@ package multiatm.command;
 import multiatm.ConsoleHelper;
 import multiatm.CurrencyManipulator;
 import multiatm.CurrencyManipulatorFactory;
+import multiatm.exception.InterruptOperationException;
 
 public class DepositCommand implements Command {
     @Override
-    public void execute() {
+    public void execute() throws InterruptOperationException {
         ConsoleHelper.writeMessage("Depositing...");
         String currencyCode = ConsoleHelper.askCurrencyCode();
         CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
