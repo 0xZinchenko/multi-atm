@@ -13,7 +13,7 @@ public class CashMachine {
                 CommandExecutor.execute(operation);
             } while (operation != Operation.EXIT);
         } catch (InterruptOperationException ignored) {
-            ConsoleHelper.writeMessage("Terminated. Thank you for visiting JavaRush cash machine. Good luck.");
+            ConsoleHelper.writeMessage("Terminated. Thank you for visiting cash machine. Good luck.");
         }
     }
 }
