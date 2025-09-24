@@ -1,14 +1,18 @@
 package multiatm.command;
 
+import multiatm.CashMachine;
 import multiatm.ConsoleHelper;
 import multiatm.CurrencyManipulator;
 import multiatm.CurrencyManipulatorFactory;
 import multiatm.exception.InterruptOperationException;
 
+import java.util.ResourceBundle;
+
 public class DepositCommand implements Command {
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.deposit");
     @Override
     public void execute() throws InterruptOperationException {
-        ConsoleHelper.writeMessage("Depositing...");
+        ConsoleHelper.writeMessage(res.getString("before"));
         String currencyCode = ConsoleHelper.askCurrencyCode();
         CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
 
@@ -18,10 +22,10 @@ public class DepositCommand implements Command {
                 int denomination = Integer.parseInt(split[0]);
                 int count = Integer.parseInt(split[1]);
                 manipulator.addAmount(denomination, count);
-                ConsoleHelper.writeMessage(String.format("%d %s was deposited successfully", (denomination * count), currencyCode));
+                ConsoleHelper.writeMessage(String.format(res.getString("success.format"), (denomination * count), currencyCode));
                 break;
             } catch (NumberFormatException e) {
-                ConsoleHelper.writeMessage("Please specify valid data.");
+                ConsoleHelper.writeMessage("invalid.data");
             }
         }
 
