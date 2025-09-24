@@ -1,34 +1,33 @@
 package multiatm.command;
 
+import multiatm.CashMachine;
 import multiatm.ConsoleHelper;
 import multiatm.exception.InterruptOperationException;
 
+import java.util.ResourceBundle;
+
 public class LoginCommand implements Command {
-    private String validCreditCard = "123456789012";
-    private String validPin = "1234";
+    private ResourceBundle validCreditCards = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.verifiedCards");
 
     @Override
     public void execute() throws InterruptOperationException {
         ConsoleHelper.writeMessage("Logging in...");
 
         while (true) {
-            ConsoleHelper.writeMessage("Enter 12-digit credit card number:");
-            String card = ConsoleHelper.readString().trim();
-
-            ConsoleHelper.writeMessage("Enter 4-digit PIN code:");
-            String pin = ConsoleHelper.readString().trim();
-
-            if (!card.matches("\\d{12}") || !pin.matches("\\d{4}")) {
+            ConsoleHelper.writeMessage("Please specify your credit card number and pin code or type 'EXIT' for exiting.");
+            String creditCardNumber = ConsoleHelper.readString();
+            String pinStr = ConsoleHelper.readString();
+            if (!creditCardNumber.matches("\\d{12}") || !pinStr.matches("\\d{4}")) {
                 ConsoleHelper.writeMessage("Invalid input. Card must be 12 digits, PIN — 4 digits.");
                 continue;
-            }
-
-            if (card.equals(validCreditCard) && pin.equals(validPin)) {
-                ConsoleHelper.writeMessage(String.format("Credit card [%s] verified successfully!", card));
-                break;
             } else {
-                ConsoleHelper.writeMessage(String.format("Credit card [%s] is not verified.", card));
-                ConsoleHelper.writeMessage("Try again or type 'EXIT' to quit.");
+                    if (validCreditCards.containsKey(creditCardNumber) && pinStr.equals(validCreditCards.getString(creditCardNumber))) {
+                        ConsoleHelper.writeMessage(String.format("Credit card [%s] is verified successfully!", creditCardNumber));
+                        break;
+                    } else {
+                        ConsoleHelper.writeMessage(String.format("Credit card [%s] is not verified.", creditCardNumber));
+                        ConsoleHelper.writeMessage("Please try again or type 'EXIT' for urgent exiting");
+                    }
             }
         }
     }
