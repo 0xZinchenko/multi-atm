@@ -1,6 +1,7 @@
 package multiatm.command;
 
 import multiatm.Operation;
+import multiatm.exception.InterruptOperationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class CommandExecutor {
     private CommandExecutor() {
     }
 
-    public static final void execute(Operation operation) {
+    public static final void execute(Operation operation) throws InterruptOperationException {
         Command command = allKnownCommandsMap.get(operation);
         if (command != null) {
             command.execute();

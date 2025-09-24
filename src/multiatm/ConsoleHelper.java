@@ -1,5 +1,7 @@
 package multiatm;
 
+import multiatm.exception.InterruptOperationException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,15 +13,19 @@ public class ConsoleHelper {
         System.out.println(message);
     }
 
-    public static String readString() {
-        try {
-            return bis.readLine();
-        } catch (IOException ignored) {
-        }
+    public static String readString() throws InterruptOperationException {
+       try {
+           String text = bis.readLine();
+           if ("exit".equals(text.toLowerCase())) {
+               throw new InterruptOperationException();
+           }
+           return text;
+
+       } catch (IOException ignored) {}
         return null;
     }
 
-    public static String askCurrencyCode() {
+    public static String askCurrencyCode() throws InterruptOperationException {
         while (true) {
             writeMessage("Please enter a 3-letter currency code, for example USD:");
             String input = readString();
@@ -33,7 +39,7 @@ public class ConsoleHelper {
         }
     }
 
-    public static String[] getValidTwoDigits(String currencyCode) {
+    public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException {
         while (true) {
             writeMessage("Enter two positive integers separated by space. " +
                     "First is denomination, second is number of banknotes:");
@@ -60,7 +66,7 @@ public class ConsoleHelper {
         }
     }
 
-    public static Operation askOperation() {
+    public static Operation askOperation() throws InterruptOperationException {
         while (true) {
             ConsoleHelper.writeMessage("Please choose an operation desired or type 'EXIT' for exiting");
             ConsoleHelper.writeMessage("\t 1 - operation.INFO");
