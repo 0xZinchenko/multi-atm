@@ -7,7 +7,7 @@ import multiatm.exception.InterruptOperationException;
 import java.util.ResourceBundle;
 
 public class ExitCommand implements Command  {
-    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.exit");
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "exit");
     @Override
     public void execute() throws InterruptOperationException {
         ConsoleHelper.writeMessage(res.getString("exit.question.y.n"));

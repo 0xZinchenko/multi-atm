@@ -8,7 +8,7 @@ import multiatm.CurrencyManipulatorFactory;
 import java.util.ResourceBundle;
 
 public class InfoCommand implements Command  {
-    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.class.getPackage().getName() + ".resources.info");
+    private ResourceBundle res = ResourceBundle.getBundle(CashMachine.RESOURCE_PATH + "info");
     @Override
     public void execute() {
         ConsoleHelper.writeMessage(res.getString("before"));
